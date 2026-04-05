@@ -1,0 +1,46 @@
+import React from "react";
+import ThemeToggle from "../../Theme/Theme Toggle";
+import { Link, NavLink } from "react-router";
+import { CgProfile } from "react-icons/cg";
+import { LuLogOut } from "react-icons/lu";
+import NavCenter from "./NavCenter";
+
+const NavEnd = () => {
+  return (
+    <div className=" navbar-end dropdown flex gap-5">
+        <NavCenter />
+      <div className="hidden sm:flex">
+        <ThemeToggle />
+      </div>
+
+      <div
+        tabIndex={0}
+        role="button"
+        className="btn btn-ghost btn-circle avatar">
+        <div className="w-10  rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          />
+        </div>
+      </div>
+      <ul
+        tabIndex="-1"
+        className=" text-[14px] menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-40 w-52 p-2 shadow">
+        <li className=" text-black">
+          <Link to="profile" className="">
+            <CgProfile className="text-lg" /> <p> Profile</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="">
+            <LuLogOut className="text-red-500 text-lg" />{" "}
+            <p className="text-red-500">Logout</p>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+export default NavEnd;

@@ -5,6 +5,7 @@ const cors = require("cors");
 const { connectDB } = require("./config/db");
 const usersRoutes = require("./routes/usersRoutes");
 const departmentsRoutes = require("./routes/departmentsRoutes");
+const appointmentsRoutes = require("./routes/appointmentsRoutes")
 const attachDB = require("./middleware/attachDB");
 
 const app = express();
@@ -23,7 +24,7 @@ async function startServer() {
 
   app.use("/users", usersRoutes);
   app.use("/departments", departmentsRoutes);
-
+  app.use("/appointments", appointmentsRoutes)
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

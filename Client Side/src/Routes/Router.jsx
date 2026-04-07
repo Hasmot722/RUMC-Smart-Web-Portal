@@ -3,6 +3,7 @@ import Root from "../Layouts/Root/Root";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import BookAppointment from "../Pages/Book Appointment/BookAppointment";
+import History from "../Pages/Medical History/History";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,13 @@ export const router = createBrowserRouter([
         {
             path :"book-appointment",
             Component: BookAppointment
-        }
+        },
+        {
+            path: "medical-history",
+            Component: History
+        },
+        
+
     ]
   },
 ]);

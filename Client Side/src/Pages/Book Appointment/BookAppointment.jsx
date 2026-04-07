@@ -3,11 +3,19 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Link, Navigate, useNavigate } from "react-router";
 import AppointmentCard from "./AppointmentCard";
 import axiosProvider from "../../APIs/axiosProvider";
+import BookingModal from "./BookingModal";
 
 const BookAppointment = () => {
   const navigate = useNavigate();
+  const user = {
+    _id: 1310383432,
+    name: "Ahsan Habib",
+    email: "ahsan@gmail.com",
+    designation: "Undergraduate Student",
+  };
 
   const [departments, setDepartments] = useState([]);
+  const [selectedDept, setSelectedDept] = useState(null);
 
   useEffect(() => {
     axiosProvider
@@ -20,6 +28,18 @@ const BookAppointment = () => {
       });
   }, []);
 
+  const [currentAppointment, setCurrentAppointment] = useState({});
+  useEffect(() => {
+    axiosProvider
+      .get(`appointments/current/${user._id}`)
+      .then((res) => {
+        console.log(res.data);
+        setCurrentAppointment(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [user._id]);
 
   return (
     <div className="mt-3 sm:mt-5  sm:mx-10 ">
@@ -35,9 +55,15 @@ const BookAppointment = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-items-center">
         {departments.map((department) => (
-          <AppointmentCard key={department._id} department={department} />
+          <AppointmentCard
+            key={department._id}
+            department={department}
+            setSelectedDept={setSelectedDept}
+            currentAppointment={currentAppointment}
+          />
         ))}
       </div>
+      <BookingModal department={selectedDept} setCurrentAppointment={setCurrentAppointment} />
     </div>
   );
 };

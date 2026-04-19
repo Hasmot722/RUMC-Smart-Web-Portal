@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import HistoryModal from "./HistoryModal";
 import { Link, useNavigate } from "react-router";
+import axiosProvider from "../../APIs/axiosProvider";
 
-const data = [
-  { date: "15 Jan 2024", dept: "Cardiology", status: "completed" },
-  { date: "28 Dec 2023", dept: "ENT", status: "completed" },
-  { date: "15 Sep 2024", dept: "Dermatology", status: "incomplete" },
-  { date: "24 Feb 2025", dept: "Orthopedics", status: "completed" },
-  { date: "5 Oct 2025", dept: "Gynecology", status: "completed" },
-];
+const user = {
+  _id: 1310383432,
+  name: "Ahsan Habib",
+  email: "ahsan@gmail.com",
+  designation: "Undergraduate Student",
+};
 
 const History = () => {
-    const navigate = useNavigate();
-  return (<div className="min-h-screen bg-gradient-to-br from-[#f5f3ff] via-white to-[#ede9fe] p-4 ">
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [appointmentDetails, setAppointment] = useState(null);
 
+  useEffect(() => {
+    axiosProvider
+      .get(`appointments/patient/${user._id}`) // ✅ FIXED
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
 
+  return (
+    <div className="min-h-screen mt-3 sm:mt-5 bg-gradient-to-br from-[#f5f3ff] via-white to-[#ede9fe]  sm:mx-10">
       {/* 🔙 Back */}
-      <div className="flex items-center gap-2 text-red-500 font-medium  cursor-pointer hover:gap-3 transition-all">
+      <div className="flex items-center gap-2 text-red-500 font-medium  cursor-pointer hover:gap-3 transition-all mx-3 text-lg">
         <Link
           onClick={() => navigate(-1)}
           className="flex gap-1 items-center   text-red-600">
@@ -27,65 +41,75 @@ const History = () => {
       </div>
 
       {/* 🧾 Header */}
-      <div className="text-center mb-5">
-        <h1 className="text-2xl font-bold text-gray-800 tracking-tight">
+      <div className="text-center -mt-7 mb-2 sm:mb-5">
+        <h1 className="text-lg sm:text-2xl font-bold text-gray-800 tracking-tight">
           My Medical History
         </h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          Track all your past appointments & reports
-        </p>
       </div>
 
       {/* 🧊 Glass Card */}
-      <div className="max-w-5xl mx-auto bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl p-6">
-
+      <div className=" mx-auto bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl px-2 py-3 sm:p-6">
         {/* Header Row */}
-        <div className="grid grid-cols-4 text-gray-400 text-xs uppercase tracking-wider pb-3 px-3">
-          <span>Date</span>
+        <div className="grid grid-cols-4 text-gray-400 text-[10px] sm:text-xs uppercase text-center tracking-wider pb-3 px-3">
+          <span className="text-left">Date</span>
           <span>Department</span>
           <span>Status</span>
           <span className="text-right">Action</span>
         </div>
 
         {/* Data Rows */}
-        {data.map((item, i) => (
-          <div
-            key={i}
-            className="grid grid-cols-4 items-center px-3 py-4 rounded-xl hover:bg-white/70 transition-all duration-200 group"
-          >
-            <span className="text-gray-700 font-medium">{item.date}</span>
-
-            <span className="text-gray-600">{item.dept}</span>
-
-            {/* Status */}
-            <span>
-              <span
-                className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                  item.status === "completed"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-500"
-                }`}
-              >
-                {item.status}
-              </span>
-            </span>
-
-            {/* Action */}
-            <div className="text-right">
-              <button
-                onClick={() =>
-                  document.getElementById("premium_modal").showModal()
+        {data.map((appointment, i) => (
+          <>
+            <div
+              key={i}
+              className="text-center grid grid-cols-4 text-xs sm:text-lg items-center px-3 py-4 rounded-xl hover:bg-white/70 transition-all duration-200 group">
+              <span className="text-gray-700 font-medium text-left">
+                {
+                  new Date(appointment.metaData.bookingTime)
+                    .toISOString()
+                    .split("T")[0]
                 }
-                className="px-4 py-1.5 text-sm rounded-lg bg-primary text-white hover:scale-105 hover:shadow-lg transition-all duration-200"
-              >
-                Details
-              </button>
+              </span>
+
+              <span className="text-gray-600">
+                {appointment.department.name}
+              </span>
+
+              {/* Status */}
+              <span>
+                <span
+                  className={`px-3 py-1 text-[10px] sm:text-sm font-semibold rounded-full ${
+                    appointment.status === "completed" ?
+                      "bg-green-100 text-green-600"
+                    : appointment.status === "pending" ?
+                      "bg-yellow-100 text-yellow-600"
+                    : "bg-red-100 text-red-500"
+                  }`}>
+                  {appointment.status}
+                </span>
+              </span>
+
+              {/* Action */}
+              <div className="text-right">
+                <button
+                  disabled={appointment.status === "cancelled"}
+                  onClick={() => {
+                    setAppointment(appointment);
+                    document.getElementById("premium_modal").showModal();
+                  }}
+                  className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-sm rounded-lg 
+  bg-primary text-white transition-all duration-200 
+  hover:scale-105 hover:shadow-lg 
+  disabled:bg-gray-500 disabled:cursor-not-allowed 
+  disabled:hover:scale-100 disabled:hover:shadow-none`}>
+                  Details
+                </button>
+              </div>
             </div>
-          </div>
+          </>
         ))}
       </div>
-
-      <HistoryModal />
+      <HistoryModal appointmentDetails={appointmentDetails} />
     </div>
   );
 };

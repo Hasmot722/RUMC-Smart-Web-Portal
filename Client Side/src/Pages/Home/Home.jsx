@@ -44,7 +44,7 @@ const Home = () => {
           />
         </Link>
 
-        <Link to="Schedule-Test">
+        <Link to="schedules">
           <img
             src={schedules}
             alt=""

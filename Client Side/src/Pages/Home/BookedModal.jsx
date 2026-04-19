@@ -33,9 +33,9 @@ const BookedModal = ({ user, currentAppointment, setCurrentAppointment }) => {
           {/* 🏥 Department */}
           <div className="text-center mb-4">
             <p className="text-lg font-semibold text-primary">
-              {currentAppointment?.department?.name}
+              {currentAppointment?.department?.name} Department
             </p>
-            <p className="text-black/90">Room No. 204</p>
+            <p className="text-green-600">Room No. 204</p>
           </div>
 
           {/* 📊 SERIAL + TIME */}

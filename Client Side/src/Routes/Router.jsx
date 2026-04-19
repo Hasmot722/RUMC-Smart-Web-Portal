@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import BookAppointment from "../Pages/Book Appointment/BookAppointment";
 import History from "../Pages/Medical History/History";
+import Schedules from "../Pages/Schedules/Schedules";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,10 @@ export const router = createBrowserRouter([
             path: "medical-history",
             Component: History
         },
-        
+        {
+            path: "schedules",
+            Component: Schedules
+        }
 
     ]
   },

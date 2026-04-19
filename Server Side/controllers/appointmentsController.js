@@ -10,8 +10,22 @@ exports.getAppointments = async (req, res) => {
   }
 };
 
-exports.getUserAppointments = async (req, res) =>{
+exports.getUserAppointments = async (req, res) => {
+  try {
+    const { patientId } = req.params;
+    const query = {
+      "patient.id": Number(patientId),
+    };
+
+    const result = await req.collections.appointments
+      .find(query)
+      .sort({ "metaData.bookingTime": -1 })
+      .toArray();
+
+    res.status(200).send(result);
+  } catch (error) {
     
+  }
 };
 
 exports.getCurrentAppointment = async (req, res) => {
@@ -60,7 +74,7 @@ exports.cancelAppointment = async (req, res) => {
           "metaData.cancelReason": reason || null,
           "metaData.cancelledAt": new Date(),
         },
-      }
+      },
     );
 
     res.status(200).send(result);

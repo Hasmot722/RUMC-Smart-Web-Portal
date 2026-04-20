@@ -9,6 +9,7 @@ import Dashboard from "../Layouts/Dashboard/Dashboard";
 import DoctorDashboard from "../Pages/Dashboard/Doctor/DoctorDashboard";
 import DashHome from "../Layouts/Dashboard/DashHome";
 import ManageSchedule from "../Pages/Dashboard/Doctor/ManageSchedule";
+import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,21 @@ export const router = createBrowserRouter([
         {
             path: "manage-schedule",
             Component: ManageSchedule,
+            path :"book-appointment",
+            Component: BookAppointment
+        },
+        {
+            path: "medical-history",
+            Component: History
+        },
+        {
+            path: "schedules",
+            Component: Schedules
+        },
+        {
+        path: "emergency",  
+        Component: EmergencyServices
+      }
 
         }
     ],

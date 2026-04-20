@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import BookAppointment from "../Pages/Book Appointment/BookAppointment";
 import History from "../Pages/Medical History/History";
 import Schedules from "../Pages/Schedules/Schedules";
+import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ export const router = createBrowserRouter([
         {
             path: "schedules",
             Component: Schedules
-        }
+        },
+        {
+        path: "emergency",  
+        Component: EmergencyServices
+      }
 
     ]
   },

@@ -36,40 +36,38 @@ export const router = createBrowserRouter([
         path: "schedules",
         Component: Schedules,
       },
+      {
+        path: "emergency",
+        Component: EmergencyServices,
+      },
     ],
   },
 
   {
     path: "/dashboard",
-    element: (
-        <Dashboard />
-    ),
+    element: <Dashboard />,
 
     children: [
-        {
-            index: true,
-            Component: DashHome,
-        },
-        {
-            path: "manage-schedule",
-            Component: ManageSchedule,
-            path :"book-appointment",
-            Component: BookAppointment
-        },
-        {
-            path: "medical-history",
-            Component: History
-        },
-        {
-            path: "schedules",
-            Component: Schedules
-        },
-        {
-        path: "emergency",  
-        Component: EmergencyServices
+      {
+        index: true,
+        Component: DashHome,
+      },
+      {
+        path: "manage-schedule",
+        Component: ManageSchedule,
+      },
+      {
+        path: "book-appointment",
+        Component: BookAppointment,
+      },
+      {
+        path: "medical-history",
+        Component: History,
+      },
+      {
+        path: "schedules",
+        Component: Schedules,
       }
-
-        }
     ],
   },
 ]);

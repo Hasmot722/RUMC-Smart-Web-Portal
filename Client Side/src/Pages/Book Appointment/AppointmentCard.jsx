@@ -2,7 +2,6 @@ import React from "react";
 import { FaArrowLeft, FaHeart } from "react-icons/fa";
 import BookAppointment from "./BookAppointment";
 import BookingModal from "./BookingModal";
-//Just testing 
 const AppointmentCard = ({
   department,
   setSelectedDept,

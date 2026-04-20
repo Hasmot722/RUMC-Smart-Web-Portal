@@ -85,7 +85,7 @@ const About = () => {
 
                 <div className="w-full h-80 rounded-lg overflow-hidden shadow-md">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.345060285341!2d88.64144537535523!3d24.369296878253163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbf031f3896c39%3A0x94ebce44f55e285f!2sRajshahi%20University%20Medical%20Center!5e0!3m2!1sen!2sbd!4v1776711258057!5m2!1sen!2sbd"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.345060285341!2d88.64144537535523!3d24.369296878253163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbf031f3896c39%3A0x94ebce44f55e285f!2sRajshahi%20University%20Medical%20Center!5e0!3m2!1sen!2sbd!4v1776711258057!5m2!1sen!2sbdc"
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}

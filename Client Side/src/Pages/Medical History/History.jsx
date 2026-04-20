@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import HistoryModal from "./HistoryModal";
+import HistoryModal from "../Dashboard/Doctor/HistoryModal";
 import { Link, useNavigate } from "react-router";
 import axiosProvider from "../../APIs/axiosProvider";
 
@@ -110,6 +110,7 @@ const History = () => {
         ))}
       </div>
       <HistoryModal appointmentDetails={appointmentDetails} />
+      
     </div>
   );
 };

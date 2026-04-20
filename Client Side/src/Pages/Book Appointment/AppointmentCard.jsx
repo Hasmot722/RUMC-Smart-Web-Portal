@@ -2,7 +2,7 @@ import React from "react";
 import { FaArrowLeft, FaHeart } from "react-icons/fa";
 import BookAppointment from "./BookAppointment";
 import BookingModal from "./BookingModal";
-
+//
 const AppointmentCard = ({
   department,
   setSelectedDept,

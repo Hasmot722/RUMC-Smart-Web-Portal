@@ -27,8 +27,13 @@ const CurrentActions = () => {
   }, [user._id]);
 
   return (
+<<<<<<< HEAD
     <div className="w-[98%]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3">
+=======
+    <div className="w-full sm:w-[99%]">
+      <div className="grid grid-cols-1 justify-between md:grid-cols-2 gap-4 p-3">
+>>>>>>> 118c831 (Errors Fixed)
         {/* Appointment Card */}
         <div className="bg-secondary  border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">
           {" "}
@@ -72,7 +77,11 @@ const CurrentActions = () => {
         </div>
 
         {/* Test Card */}
+<<<<<<< HEAD
         <div className=" bg-secondary  border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
+=======
+        <div className="bg-secondary sm:w-[98%] border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
+>>>>>>> 118c831 (Errors Fixed)
           <div className="bg-primary/10 p-3 rounded-full">
             <FaVial className="text-primary text-5xl" />
           </div>

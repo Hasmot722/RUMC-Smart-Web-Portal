@@ -27,10 +27,10 @@ const CurrentActions = () => {
   }, [user._id]);
 
   return (
-    <div className="flex justify-between">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3">
+    <div className="w-[98%]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3">
         {/* Appointment Card */}
-        <div className="bg-secondary border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">
+        <div className="bg-secondary  border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">
           {" "}
           {/* ✅ FIXED */}
           <div className="bg-primary/10 p-3 rounded-full">
@@ -72,7 +72,7 @@ const CurrentActions = () => {
         </div>
 
         {/* Test Card */}
-        <div className="bg-secondary border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
+        <div className=" bg-secondary  border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
           <div className="bg-primary/10 p-3 rounded-full">
             <FaVial className="text-primary text-5xl" />
           </div>

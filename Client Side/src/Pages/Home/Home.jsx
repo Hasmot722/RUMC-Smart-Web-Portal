@@ -65,7 +65,7 @@ const Home = () => {
         <CurrentActions />
       </div>
 
-      <div className="lg:w-2/5 mx-auto not-sm:hidden">
+      <div className="lg:w-2/5 lg:mx-6 not-sm:hidden">
         <NoticeInfo />
       </div>
     </div>

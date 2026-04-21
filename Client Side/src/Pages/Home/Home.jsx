@@ -6,7 +6,7 @@ import requestPrescription from "../../assets/requestPrescription.png";
 import schedules from "../../assets/schedules.png";
 import medicalHistory from "../../assets/history.png";
 import { Link } from "react-router";
-import CurrentActions from "./currentActions";
+import CurrentActions from "./CurrentActions";
 import NoticeInfo from "./NoticeInfo";
 
 const Home = () => {

@@ -11,6 +11,7 @@ import DashHome from "../Layouts/Dashboard/DashHome";
 import ManageSchedule from "../Pages/Dashboard/Doctor/ManageSchedule";
 import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
 import About from "../Pages/About/About";
+import Contact from "../Pages/Contact/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -44,9 +45,17 @@ export const router = createBrowserRouter([
       {
         path: "about",  
         Component: About,
+      },
+      {
+        path: "contact",  
+        Component: Contact,
       }
     ],
   },
+
+
+
+
 
   {
     path: "/dashboard",

@@ -27,7 +27,7 @@ const CurrentActions = () => {
   }, [user._id]);
 
   return (
-    <div className="xl:mx-5">
+    <div className="flex justify-between">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3">
         {/* Appointment Card */}
         <div className="bg-secondary border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">

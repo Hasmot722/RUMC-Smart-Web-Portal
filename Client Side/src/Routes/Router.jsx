@@ -10,6 +10,7 @@ import DoctorDashboard from "../Pages/Dashboard/Doctor/DoctorDashboard";
 import DashHome from "../Layouts/Dashboard/DashHome";
 import ManageSchedule from "../Pages/Dashboard/Doctor/ManageSchedule";
 import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
+import About from "../Pages/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
         path: "emergency",
         Component: EmergencyServices,
       },
+      {
+        path: "about",  
+        Component: About,
+      }
     ],
   },
 

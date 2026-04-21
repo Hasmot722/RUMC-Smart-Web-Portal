@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import axiosProvider from "../../../APIs/axiosProvider";
+import toast from "react-hot-toast";
 
-const PrescriptionModal = () => {
+const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
   const [medicines, setMedicines] = useState([
     { name: "", dose: "", duration: "" },
   ]);
@@ -23,6 +25,13 @@ const PrescriptionModal = () => {
     setMedicines(updated);
   };
 
+  const cleanedMedicines = medicines.filter(
+  (m) =>
+    m.name.trim() !== "" ||
+    m.dose.trim() !== "" ||
+    m.duration.trim() !== ""
+);
+
   // ===== TESTS =====
   const addTest = () => {
     setTests([...tests, ""]);
@@ -38,13 +47,40 @@ const PrescriptionModal = () => {
     setTests(updated);
   };
 
+  const handleSaveReport = async () => {
+    const cleanedTests = tests.filter((t) => t.trim() !== "");
+
+    axiosProvider
+      .post(`/reports/appointment/${currentAppointment._id}`, {
+        medicines: cleanedMedicines,
+        tests: cleanedTests,
+        notes: "",
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Report Saved Successfully");
+
+        // 🔥 update UI instantly
+        if (onReportSaved) {
+          onReportSaved();
+        }
+
+        // close modal AFTER success
+        document.getElementById("report_modal").close();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to save report");
+      });
+  };
+
   return (
     <dialog id="report_modal" className="modal">
       <div className="modal-box max-w-5xl p-0 bg-white text-gray-900 max-h-[90vh] overflow-hidden flex flex-col">
         {/* HEADER */}
         <div className="bg-[#7B74EA] text-white px-6 py-4">
           <h3 className="text-lg font-semibold">Prescription</h3>
-          <p className="text-sm opacity-90">Dr. John Doe</p>
+          <p className="text-sm opacity-90">{doctor.name}</p>
         </div>
 
         {/* BODY */}
@@ -57,13 +93,15 @@ const PrescriptionModal = () => {
               </h2>
               <p className=" text-gray-900 flex gap-3">
                 {" "}
-                <p className="font-semibold">Ahsan Habib</p>{" "}
+                <p className="font-semibold">
+                  {currentAppointment?.patient?.name}
+                </p>{" "}
                 <p className="text-xs flex justify-center items-center bg-green-600 text-white px-1.5 py-0 rounded-xl">
                   Male
                 </p>
               </p>
               <p className="text-sm text-gray-600 ">
-                <p>Age: 22</p>
+                <p>Age: {currentAppointment?.patient?.age} y/o</p>
               </p>
             </div>
             <div className="text-sm text-gray-500">
@@ -178,7 +216,9 @@ const PrescriptionModal = () => {
             </button>
           </form>
 
-          <button className="px-4 py-2 rounded-md bg-[#7B74EA] text-white hover:bg-pink-700">
+          <button
+            onClick={handleSaveReport}
+            className="px-4 py-2 rounded-md bg-[#7B74EA] text-white hover:bg-pink-700">
             Save Report
           </button>
         </div>

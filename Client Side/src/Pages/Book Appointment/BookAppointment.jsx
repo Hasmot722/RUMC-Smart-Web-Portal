@@ -12,6 +12,7 @@ const BookAppointment = () => {
     name: "Ahsan Habib",
     email: "ahsan@gmail.com",
     designation: "Undergraduate Student",
+    age: 22
   };
 
   const [departments, setDepartments] = useState([]);

@@ -47,6 +47,32 @@ exports.getCurrentAppointment = async (req, res) => {
   }
 };
 
+exports.getActiveAppointmentsByDepartmentId = async (req, res) => {
+  try {
+    const { departmentId } = req.params;
+
+    const query = {
+      status: "pending",
+      "metaData.isActive": true,
+    };
+
+    // filter by department (your current system)
+    if (departmentId) {
+      query["department.id"] = departmentId;
+    }
+
+    const result = await req.collections.appointments
+      .find(query)
+      .sort({ serialNo: 1 }) // queue order
+      .toArray();
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 exports.addAppointments = async (req, res) => {
   try {
     const appointmentData = req.body;

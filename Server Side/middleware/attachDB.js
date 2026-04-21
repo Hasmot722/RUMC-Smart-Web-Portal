@@ -8,7 +8,8 @@ const attachDB = (req, res, next) => {
       users: db.collection("Users"),
       departments: db.collection("Departments"),
       schedules: db.collection("Schedules"),
-      appointments: db.collection("Appointments")
+      appointments: db.collection("Appointments"),
+      reports: db.collection("Reports"),
     };
     next();
   } catch (err) {

@@ -55,8 +55,8 @@ const HandledPatients = ({ doctor, onEditReport }) => {
               {/* LEFT */}
               <div className="flex gap-3 items-center">
                 <img
-                  src="https://i.pravatar.cc/40"
-                  className="rounded-full"
+                  src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
+                  className="rounded-full h-10 w-10"
                   alt=""
                 />
 

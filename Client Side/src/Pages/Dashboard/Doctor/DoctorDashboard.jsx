@@ -140,8 +140,8 @@ const DoctorDashboard = () => {
               <div className="flex gap-4 p-4 items-center">
                 <div>
                   <img
-                    src="https://i.pravatar.cc/100"
-                    className="w-24 h-24 rounded-xl"
+                    src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
+                    className="w-26 h-24 rounded-xl"
                     alt=""
                   />
 
@@ -224,8 +224,8 @@ const DoctorDashboard = () => {
                     className="flex justify-between items-center border-b pb-2">
                     <div className="flex gap-3 items-center">
                       <img
-                        src="https://i.pravatar.cc/40"
-                        className="rounded-full"
+                        src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
+                        className="rounded-full w-10 h-10"
                         alt=""
                       />
                       <div>

@@ -8,10 +8,11 @@ const BookingModal = ({ department, setCurrentAppointment }) => {
     name: "Ahsan Habib",
     email: "ahsan@gmail.com",
     designation: "Undergraduate Student",
+    age: 22
   };
 
   const bookingInfo = {
-    serialNo: 12,
+    serialNo: 1,
     estimatedTime: "11:30AM - 12:00AM",
     roomNo: 204,
   };
@@ -28,6 +29,7 @@ const BookingModal = ({ department, setCurrentAppointment }) => {
         id: user._id,
         name: user.name,
         designation: user.designation,
+        age: user.age,
       },
 
       department: {

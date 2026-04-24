@@ -43,7 +43,7 @@ const BookAppointment = () => {
   }, [user._id]);
 
   return (
-    <div className="mt-3 sm:mt-5  sm:mx-10 ">
+    <div className="mt-5 sm:mt-10  sm:mx-10 ">
       <div className=" text-lg flex mx-3 justify-between">
         <Link
           onClick={() => navigate(-1)}

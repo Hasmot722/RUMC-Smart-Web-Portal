@@ -3,6 +3,7 @@ import axiosProvider from "../../APIs/axiosProvider";
 import toast from "react-hot-toast";
 
 const BookedModal = ({ user, currentAppointment, setCurrentAppointment }) => {
+
   const handleCancelAppointment = () => {
     axiosProvider
       .patch(`/appointments/${currentAppointment._id}/cancel`, {
@@ -92,7 +93,6 @@ const BookedModal = ({ user, currentAppointment, setCurrentAppointment }) => {
             <button
               onClick={() => {
                 handleCancelAppointment();
-                console.log("Confirmed");
                 document.getElementById("confirm_cancel_modal").close();
                 document.getElementById("booked_modal").close();
               }}

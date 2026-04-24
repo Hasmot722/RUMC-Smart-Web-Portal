@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
-@import "tailwindcss";
-@plugin "daisyui";
+
 
 @plugin "daisyui/theme" {
   name: "light";
@@ -19,9 +18,9 @@
 
   --color-primary: #7B74EA;
   --color-secondary: #EEE9FC;
-  --color-accent: #fbbf24;
-  --color-base-100: #1f2937;
-  --color-base-content: #f9fafb;
+  --color-accent: #f59e0b;
+  --color-base-100: #ffffff;
+  --color-base-content: #111827;
 }
 
 body {
@@ -29,7 +28,7 @@ body {
 }
 
 .active{
-  color: rgb(17, 34, 143);
+  color: rgb(32, 20, 124);
   font-weight: bold;
   
 }

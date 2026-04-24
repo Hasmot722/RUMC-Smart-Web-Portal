@@ -29,7 +29,7 @@ const History = () => {
   }, []);
 
   return (
-    <div className="min-h-screen mt-3 sm:mt-5 bg-gradient-to-br from-[#f5f3ff] via-white to-[#ede9fe]  sm:mx-10">
+    <div className="min-h-screen mt-5 sm:mt-10 bg-gradient-to-br from-[#f5f3ff] via-white to-[#ede9fe]  sm:mx-10">
       {/* 🔙 Back */}
       <div className="flex items-center gap-2 text-red-500 font-medium  cursor-pointer hover:gap-3 transition-all mx-3 text-lg">
         <Link
@@ -48,7 +48,7 @@ const History = () => {
       </div>
 
       {/* 🧊 Glass Card */}
-      <div className=" mx-auto bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl px-2 py-3 sm:p-6">
+      <div className="min-h-[100vh] mt-5 mx-3 bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl px-2 py-3 sm:p-6">
         {/* Header Row */}
         <div className="grid grid-cols-4 text-gray-400 text-[10px] sm:text-xs uppercase text-center tracking-wider pb-3 px-3">
           <span className="text-left">Date</span>
@@ -58,59 +58,67 @@ const History = () => {
         </div>
 
         {/* Data Rows */}
-        {data.map((appointment, i) => (
-          <>
-            <div
-              key={i}
-              className="text-center grid grid-cols-4 text-xs sm:text-lg items-center px-3 py-4 rounded-xl hover:bg-white/70 transition-all duration-200 group">
-              <span className="text-gray-700 font-medium text-left">
-                {
-                  new Date(appointment.metaData.bookingTime)
-                    .toISOString()
-                    .split("T")[0]
-                }
-              </span>
+        {data ?
+          <div className="grid min-h-[70vh] justify-items-center place-items-center text-primary text-lg">
+            No Medical History
+          </div>
+        : <>
+            {" "}
+            {data.map((appointment, i) => (
+              <>
+                <div
+                  key={i}
+                  className="text-center grid grid-cols-4 text-xs sm:text-lg items-center px-3 py-4 rounded-xl hover:bg-white/70 transition-all duration-200 group">
+                  <span className="text-gray-700 font-medium text-left">
+                    {
+                      new Date(appointment.metaData.bookingTime)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                  </span>
 
-              <span className="text-gray-600">
-                {appointment.department.name}
-              </span>
+                  <span className="text-gray-600">
+                    {appointment.department.name}
+                  </span>
 
-              {/* Status */}
-              <span>
-                <span
-                  className={`px-3 py-1 text-[10px] sm:text-sm font-semibold rounded-full ${
-                    appointment.status === "completed" ?
-                      "bg-green-100 text-green-600"
-                    : appointment.status === "pending" ?
-                      "bg-yellow-100 text-yellow-600"
-                    : "bg-red-100 text-red-500"
-                  }`}>
-                  {appointment.status}
-                </span>
-              </span>
+                  {/* Status */}
+                  <span>
+                    <span
+                      className={`px-3 py-1 text-[10px] sm:text-sm font-semibold rounded-full ${
+                        appointment.status === "completed" ?
+                          "bg-green-100 text-green-600"
+                        : appointment.status === "pending" ?
+                          "bg-yellow-100 text-yellow-600"
+                        : "bg-red-100 text-red-500"
+                      }`}>
+                      {appointment.status}
+                    </span>
+                  </span>
 
-              {/* Action */}
-              <div className="text-right">
-                <button
-                  disabled={appointment.status === "cancelled"}
-                  onClick={() => {
-                    setAppointment(appointment);
-                    document.getElementById("premium_modal").showModal();
-                  }}
-                  className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-sm rounded-lg 
+                  {/* Action */}
+                  <div className="text-right">
+                    <button
+                      disabled={appointment.status === "cancelled"}
+                      onClick={() => {
+                        setAppointment(appointment);
+                        document.getElementById("premium_modal").showModal();
+                      }}
+                      className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-sm rounded-lg 
   bg-primary text-white transition-all duration-200 
   hover:scale-105 hover:shadow-lg 
   disabled:bg-gray-500 disabled:cursor-not-allowed 
   disabled:hover:scale-100 disabled:hover:shadow-none`}>
-                  Details
-                </button>
-              </div>
-            </div>
+                      Details
+                    </button>
+                  </div>
+                </div>
+              </>
+            ))}
           </>
-        ))}
+        }
       </div>
+
       <HistoryModal appointmentDetails={appointmentDetails} />
-      
     </div>
   );
 };

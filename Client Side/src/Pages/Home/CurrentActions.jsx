@@ -26,16 +26,18 @@ const CurrentActions = () => {
       });
   }, [user._id]);
 
+  
   return (
     <div className="w-full sm:w-[99%]">
       <div className="grid grid-cols-1 justify-between md:grid-cols-2 gap-4 p-3">
         {/* Appointment Card */}
-        <div className="bg-secondary  border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">
+        <div className="bg-secondary s border border-primary rounded-xl shadow-xl p-4 flex items-center justify-start gap-4 hover:shadow-lg transition min-h-[15vh]">
           {" "}
           {/* ✅ FIXED */}
           <div className="bg-primary/10 p-3 rounded-full">
             <FaCalendarCheck className="text-primary text-4xl sm:text-5xl" />
           </div>
+
           <div className="w-full">
             <h3 className="font-semibold flex justify-between text-gray-800">
               <div>Upcoming Appointment</div>
@@ -69,10 +71,11 @@ const CurrentActions = () => {
               </>
             : <p>No Available Booking</p>}
           </div>
+
         </div>
 
         {/* Test Card */}
-        <div className="bg-secondary sm:w-[98%] border border-primary rounded-xl shadow-md p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
+        <div className="bg-secondary sm:w-[98%] border border-primary rounded-xl shadow-xl p-4 flex items-center justify-start gap-4 hover:shadow-lg transition">
           <div className="bg-primary/10 p-3 rounded-full">
             <FaVial className="text-primary text-5xl" />
           </div>

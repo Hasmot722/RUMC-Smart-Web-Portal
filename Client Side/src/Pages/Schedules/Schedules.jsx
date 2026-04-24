@@ -157,7 +157,7 @@ const Schedules = () => {
       </div>
 
       {/* 🧪 TESTS */}
-      <div className="brounded-2xl mt-10">
+      <div className="rounded-2xl mt-10">
   <h3 className="font-semibold text-lg mb-4">Available Tests</h3>
 
   <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">

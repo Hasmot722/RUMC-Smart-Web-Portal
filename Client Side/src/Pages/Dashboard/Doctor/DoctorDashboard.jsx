@@ -13,6 +13,8 @@ import { MdAssignmentAdd } from "react-icons/md";
 import axiosProvider from "../../../APIs/axiosProvider";
 import MedicalHistoryModal from "./MedicalHistoryModal";
 import HandledPatients from "./HandledPatients";
+import { RiCalendarScheduleLine } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const doctor = {
   _id: 123456789,
@@ -106,16 +108,37 @@ const DoctorDashboard = () => {
       .catch((err) => console.log(err.message));
   });
 
+  const onReportSaved = () => {
+    setPendingAppointments((prev) => prev.slice(1));
+  };
+
+  const handleMarkAbsent = async () => {
+    try {
+      const query = {
+        $set: {
+          status: "quarantined",
+        },
+      };
+
+      const res = await axiosProvider.patch(
+        `appointments/update/${currentAppointment._id}`,
+        query,
+      );
+
+      console.log(res.data);
+      toast.error("Successfully Quarantined");
+
+      onReportSaved();
+      document.getElementById("mark_absent_modal").close();
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to mark absent");
+    }
+  };
+
   return (
     <div className="flex-1">
       {/* TOP BAR */}
-      <div className="h-18 bg-[#dcdaf5] flex justify-end items-center  px-6">
-        <img
-          src="https://i.pravatar.cc/40"
-          className="rounded-full border"
-          alt="user"
-        />
-      </div>
 
       {/* CONTENT */}
       <div className="py-6 mx-20">
@@ -138,90 +161,126 @@ const DoctorDashboard = () => {
               </div>
 
               <div className="flex gap-4 p-4 items-center">
-                <div>
-                  <img
-                    src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
-                    className="w-26 h-24 rounded-xl"
-                    alt=""
-                  />
+                {currentAppointment ?
+                  <>
+                    <div>
+                      <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
+                        className="w-26 h-24 rounded-xl"
+                        alt=""
+                      />
 
-                  <button
-                    onClick={() =>
-                      document.getElementById("history_modal").showModal()
-                    }
-                    className="text-gray-400 mt-3 text-xs flex gap-2 justify-center items-center">
-                    {" "}
-                    <FaHistory /> <p>Medical History</p>
-                  </button>
-                </div>
+                      <button
+                        onClick={() =>
+                          document.getElementById("history_modal").showModal()
+                        }
+                        className="text-gray-400 mt-3 text-xs flex gap-2 justify-center items-center">
+                        {" "}
+                        <FaHistory /> <p>Medical History</p>
+                      </button>
+                    </div>
 
-                <div className="flex-1 justify-between h-full">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {currentAppointment?.patient?.name}
-                    <span className="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
-                      {currentAppointment?.patient?.age} y/o
-                    </span>
-                  </h3>
+                    <div className="flex-1 justify-between h-full">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {currentAppointment?.patient?.name}
+                        <span className="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
+                          {currentAppointment?.patient?.age} y/o
+                        </span>
+                      </h3>
 
-                  <p className="text-sm text-gray-500">
-                    {currentAppointment?.patient?.designation}
-                  </p>
+                      <p className="text-sm text-gray-500">
+                        {currentAppointment?.patient?.designation}
+                      </p>
 
-                  <p className="text-sm font-medium text-gray-800 mt-1">
-                    Serial No: #{currentAppointment?.serialNo}
-                  </p>
+                      <p className="text-sm font-medium text-gray-800 mt-1">
+                        Serial No: #{currentAppointment?.serialNo}
+                      </p>
 
-                  <div className="flex gap-3 mr-5 text-lg mt-4">
-                    <button
-                      onClick={() =>
-                        document.getElementById("report_modal").showModal()
-                      }
-                      className="bg-[#7B74EA] w-full text-white px-4  py-2 flex gap-2 justify-center items-center rounded-md text-sm">
-                      <MdAssignmentAdd className="text-lg" />{" "}
-                      <p>Create Report</p>
-                    </button>
-                    <button className="bg-red-500 w-full text-white px-4 py-2 flex gap-2 items-center justify-center rounded-md text-sm">
-                      <FaUserTimes className="text-lg" /> <p>Mark Absent</p>
-                    </button>
+                      <div className="flex gap-3 mr-5 text-lg mt-4">
+                        <button
+                          onClick={() =>
+                            document.getElementById("report_modal").showModal()
+                          }
+                          className="bg-[#7B74EA] hover:bg-green-600 w-full text-white px-4  py-2 flex gap-2 justify-center items-center rounded-md text-sm">
+                          <MdAssignmentAdd className="text-lg" />{" "}
+                          <p>Create Report</p>
+                        </button>
+                        <button
+                          onClick={() =>
+                            document
+                              .getElementById("mark_absent_modal")
+                              .showModal()
+                          }
+                          className="bg-red-500  hover:bg-secondary w-full text-white px-4 py-2 flex gap-2 items-center justify-center rounded-md text-sm">
+                          <FaUserTimes className="text-lg" /> <p>Mark Absent</p>
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                : <div className="h-20 w-full flex text-gray-400 text-md   place-content-center place-items-center ">
+                    No Pending Appointments
                   </div>
-                </div>
+                }
               </div>
             </div>
 
             {/* STATS */}
             <div className="grid grid-cols-2 h-25 gap-4">
-              <div className="bg-white rounded-xl p-4 shadow-md border">
-                <p className="text-sm text-gray-600">Pending Appointments</p>
-                <h2 className="text-xl font-bold text-gray-900 mt-2">
-                  {pendingAppointments.length}
-                </h2>
+              {/* Pending Appointments */}
+              <div className="bg-[#f8f8fb] border border-green-600 flex gap-3 place-items-center rounded-xl px-4 py-2 shadow-sm ">
+                {/* TOP */}
+                <div className="rounded-full bg-green-500/20 text-green-600 p-3">
+                  <FaUserInjured className="text-2xl  " />
+                </div>
+
+                <div className=" gap-2">
+                  <div>
+                    <p className="text-sm font-bold text-gray-600">
+                      Pending Appointments
+                    </p>
+                    <h2 className="text-2xl ml-3 font-bold text-gray-900">
+                      {pendingAppointments.length}
+                    </h2>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl p-4 shadow-md border">
-                <p className="text-sm text-gray-600">
-                  Virtual Prescription Requests
-                </p>
-                <h2 className="text-xl font-bold text-gray-900 mt-2">06</h2>
+              {/* Virtual Prescription */}
+              <div className="bg-[#f8f8fb] flex gap-3 place-items-center rounded-xl px-4 py-2 shadow-sm border border-purple-500">
+                {/* TOP */}
+                <div className="rounded-full bg-purple-500/20 text-purple-500 p-3">
+                  <FaFilePrescription className="text-xl" />
+                </div>
+
+                <div className=" gap-2">
+                  <div>
+                    <p className="text-sm font-bold text-gray-600">
+                      Prescription Request
+                    </p>
+                    <h2 className="text-2xl ml-3 font-bold text-gray-900">6</h2>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* RIGHT SECTION */}
-          <div className="bg-white rounded-xl shadow-md border p-4">
-            <h3 className="font-semibold text-gray-800 mb-3">
+          <div className="bg-white border-t-4 border-primary rounded-lg shadow-md  p-4">
+            <h3 className="font-semibold flex gap-3  place-items-center text-gray-800 mb-5">
+              <RiCalendarScheduleLine className="text-lg text-primary" />{" "}
               Upcoming Appointments
             </h3>
 
             {paginatedAppointments.length === 0 ?
-              <div className="flex h-full -mt-5 justify-center items-center text-primary  font-semibold">
+              <div className="flex h-full -mt-5 justify-center items-center text-gray-400 text-md">
                 {" "}
-                <p className="text-lg">No Upcoming Appointments</p>
+                <p className="">No Upcoming Appointments</p>
               </div>
             : <div className="space-y-3">
                 {paginatedAppointments.map((upcomingAppointment, i) => (
                   <div
                     key={i}
-                    className="flex justify-between items-center border-b pb-2">
+                    className="flex justify-between items-center border-b border-primary/10 pb-2">
                     <div className="flex gap-3 items-center">
                       <img
                         src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
@@ -269,7 +328,7 @@ const DoctorDashboard = () => {
                         )
                       }
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 bg-secondary text-white rounded disabled:opacity-50">
+                      className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50">
                       Next
                     </button>
                   </div>
@@ -279,6 +338,7 @@ const DoctorDashboard = () => {
           </div>
         </div>
         <HandledPatients
+          currentAppointment={currentAppointment}
           doctor={doctor}
           onEditReport={(appt) => {
             console.log("Edit report for:", appt);
@@ -288,14 +348,43 @@ const DoctorDashboard = () => {
           }}
         />
       </div>
+
+      <dialog id="mark_absent_modal" className="modal modal-middle">
+        <div className="modal-box text-center bg-white rounded-xl">
+          <h3 className="text-lg font-semibold text-gray-800">Are you sure?</h3>
+
+          <p className="py-3 text-gray-600">
+            Mark{" "}
+            <span className="text-primary">
+              {currentAppointment?.patient?.name}
+            </span>{" "}
+            as absent
+          </p>
+
+          <div className="flex justify-center gap-4 mt-4">
+            {/* NO */}
+            <form method="dialog">
+              <button className="btn bg-gray-200 border-0 text-black px-6">
+                No
+              </button>
+            </form>
+
+            {/* YES */}
+            <button
+              onClick={handleMarkAbsent}
+              className="btn bg-red-500 border-0 text-white px-6">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </dialog>
+
       <PrescriptionModal
         doctor={doctor}
-        currentAppointment={currentAppointment}
+        appointment={currentAppointment}
         handledAppointments={handledAppointments}
         setHandledAppointments={setHandledAppointments}
-        onReportSaved={() => {
-          setPendingAppointments((prev) => prev.slice(1));
-        }}
+        onReportSaved={onReportSaved}
       />
       <MedicalHistoryModal history={history} />
     </div>

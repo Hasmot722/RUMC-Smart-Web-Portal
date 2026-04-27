@@ -48,7 +48,7 @@ const History = () => {
       </div>
 
       {/* 🧊 Glass Card */}
-      <div className="min-h-[100vh] mt-5 mx-3 bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl px-2 py-3 sm:p-6">
+      <div className="min-h-[100vh] border-t-1 border-primary mt-5 mx-3 bg-white/60 backdrop-blur-xl  shadow-[0_8px_30px_rgb(0,0,0,0.05)] rounded-3xl px-2 py-3 sm:p-6">
         {/* Header Row */}
         <div className="grid grid-cols-4 text-gray-400 text-[10px] sm:text-xs uppercase text-center tracking-wider pb-3 px-3">
           <span className="text-left">Date</span>
@@ -59,10 +59,7 @@ const History = () => {
 
         {/* Data Rows */}
         {data ?
-          <div className="grid min-h-[70vh] justify-items-center place-items-center text-primary text-lg">
-            No Medical History
-          </div>
-        : <>
+          <>
             {" "}
             {data.map((appointment, i) => (
               <>
@@ -115,6 +112,9 @@ const History = () => {
               </>
             ))}
           </>
+        : <div className="grid min-h-[70vh] justify-items-center place-items-center text-primary text-lg">
+            No Medical History
+          </div>
         }
       </div>
 

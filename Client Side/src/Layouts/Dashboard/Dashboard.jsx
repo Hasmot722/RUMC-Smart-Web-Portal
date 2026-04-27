@@ -6,10 +6,12 @@ import ReactToaster from "../../React Toast/ReactToaster";
 
 const Dashboard = () => {
   return (
-    <div className="flex min-h-screen bg-[#ecebfa]">
+    <div className="flex min-h-screen max-w-[1440px] mx-auto bg-[#ecebfa]">
       <DashSidebar />
-      <ReactToaster/>
-      <Outlet />
+      <ReactToaster />
+      <div className="ml-[250px] w-full  ">
+        <Outlet />
+      </div>
     </div>
   );
 };

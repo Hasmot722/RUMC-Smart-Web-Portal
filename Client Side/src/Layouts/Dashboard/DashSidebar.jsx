@@ -30,7 +30,7 @@ const DashSidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="w-[250px] bg-[#1e1b3a] text-white flex flex-col">
+    <div className="w-[250px]  min-h-[100vh] fixed bg-[#1e1b3a] text-white flex flex-col">
       {/* LOGO */}
       <div className="bg-[#7B74EA] flex justify-center w-full py-3">
         <Link to="/" className=" flex gap-3 ">

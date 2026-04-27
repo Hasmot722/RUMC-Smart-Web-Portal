@@ -12,6 +12,7 @@ import ManageSchedule from "../Pages/Dashboard/Doctor/ManageSchedule";
 import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
+import AbsentPatients from "../Pages/Dashboard/Doctor/AbsentPatients";
 
 export const router = createBrowserRouter([
   {
@@ -43,19 +44,15 @@ export const router = createBrowserRouter([
         Component: EmergencyServices,
       },
       {
-        path: "about",  
+        path: "about",
         Component: About,
       },
       {
-        path: "contact",  
+        path: "contact",
         Component: Contact,
-      }
+      },
     ],
   },
-
-
-
-
 
   {
     path: "/dashboard",
@@ -81,7 +78,11 @@ export const router = createBrowserRouter([
       {
         path: "schedules",
         Component: Schedules,
-      }
+      },
+      {
+        path: "absent",
+        Component: AbsentPatients,
+      },
     ],
   },
 ]);

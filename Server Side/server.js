@@ -27,6 +27,7 @@ async function startServer() {
   app.use("/departments", departmentsRoutes);
   app.use("/appointments", appointmentsRoutes);
   app.use("/reports", reportPrescriptionRoutes);
+  
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });

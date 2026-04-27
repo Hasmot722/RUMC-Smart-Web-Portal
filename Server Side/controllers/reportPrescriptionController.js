@@ -4,7 +4,7 @@ const { ObjectId } = require("mongodb");
 exports.createReport = async (req, res) => {
   try {
     const { appointmentId } = req.params;
-    const { medicines, tests, notes } = req.body;
+    const { medicines, tests, notes, status } = req.body;
 
     // CLEAN DATA
     const cleanedTests = (tests || []).filter(
@@ -21,16 +21,6 @@ exports.createReport = async (req, res) => {
 
     const hasTests = cleanedTests.length > 0;
     const hasMedicines = cleanedMedicines.length > 0;
-
-    let status;
-
-    if (hasTests) {
-      status = "processing";
-    } else if (hasMedicines) {
-      status = "completed";
-    } else {
-      status = "completed";
-    }
 
     // SAVE REPORT
     await req.collections.reports.insertOne({

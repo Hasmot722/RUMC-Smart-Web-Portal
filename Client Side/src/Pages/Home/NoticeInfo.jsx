@@ -19,7 +19,7 @@ const NoticeInfo = () => {
     <div className="w-full max-w-130 h-full mt-3 mx-3 sm:mx-6 space-y-4">
       
       {/* 🔔 NOTICES */}
-      <div className="bg-white rounded-xl shadow-lg px-10 py-8">
+      <div className="bg-white  rounded-xl shadow-lg px-10 py-8">
         <div className="flex items-center gap-2 text-gray-700 font-semibold mb-3">
           <FaBell className="text-primary" />
           <span>Important Notices</span>
@@ -44,7 +44,7 @@ const NoticeInfo = () => {
       </div>
 
       {/* 👤 USER INFO */}
-      <div className="bg-white rounded-xl shadow-lg px-10 py-8">
+      <div className="bg-white border-t-4 border-primary rounded-xl shadow-lg px-10 py-8">
         <div className="flex items-center gap-2 text-gray-700 font-semibold mb-3">
           <FaUserCircle className="text-primary" />
           <span>User Information</span>

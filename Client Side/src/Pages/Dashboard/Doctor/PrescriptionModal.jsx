@@ -3,12 +3,13 @@ import { FaTimes } from "react-icons/fa";
 import axiosProvider from "../../../APIs/axiosProvider";
 import toast from "react-hot-toast";
 
-const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
+const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
   const [medicines, setMedicines] = useState([
     { name: "", dose: "", duration: "" },
   ]);
 
   const [tests, setTests] = useState([""]);
+  const [statusCompleted, setStatusCompleted] = useState(true);
 
   // ===== MEDICINES =====
   const addMedicine = () => {
@@ -26,11 +27,9 @@ const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
   };
 
   const cleanedMedicines = medicines.filter(
-  (m) =>
-    m.name.trim() !== "" ||
-    m.dose.trim() !== "" ||
-    m.duration.trim() !== ""
-);
+    (m) =>
+      m.name.trim() !== "" || m.dose.trim() !== "" || m.duration.trim() !== "",
+  );
 
   // ===== TESTS =====
   const addTest = () => {
@@ -51,10 +50,11 @@ const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
     const cleanedTests = tests.filter((t) => t.trim() !== "");
 
     axiosProvider
-      .post(`/reports/appointment/${currentAppointment._id}`, {
+      .post(`/reports/appointment/${appointment._id}`, {
         medicines: cleanedMedicines,
         tests: cleanedTests,
         notes: "",
+        status: statusCompleted ? "completed" : "processing",
       })
       .then((res) => {
         console.log(res.data);
@@ -94,14 +94,14 @@ const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
               <p className=" text-gray-900 flex gap-3">
                 {" "}
                 <p className="font-semibold">
-                  {currentAppointment?.patient?.name}
+                  {appointment?.patient?.name}
                 </p>{" "}
                 <p className="text-xs flex justify-center items-center bg-green-600 text-white px-1.5 py-0 rounded-xl">
                   Male
                 </p>
               </p>
               <p className="text-sm text-gray-600 ">
-                <p>Age: {currentAppointment?.patient?.age} y/o</p>
+                <p>Age: {appointment?.patient?.age} y/o</p>
               </p>
             </div>
             <div className="text-sm text-gray-500">
@@ -204,6 +204,16 @@ const PrescriptionModal = ({ doctor, currentAppointment, onReportSaved }) => {
             <textarea
               placeholder="Additional notes..."
               className="w-full border border-gray-300 rounded-md p-3 h-24 focus:ring-2 focus:ring-[#7B74EA] outline-none"
+            />
+          </div>
+
+          <div className="rounded-xl flex gap-4 p-4 ">
+            <p>Completed</p>
+            <input
+              checked={statusCompleted}
+              onChange={() => setStatusCompleted((prev) => !prev)}
+              type="checkbox"
+              className="toggle bg-primary/30 toggle-primary"
             />
           </div>
         </div>

@@ -23,9 +23,7 @@ exports.getUserAppointments = async (req, res) => {
       .toArray();
 
     res.status(200).send(result);
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };
 
 exports.getCurrentAppointment = async (req, res) => {
@@ -106,6 +104,60 @@ exports.cancelAppointment = async (req, res) => {
     res.status(200).send(result);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.updateAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateQuery = req.body;
+
+    if (!updateQuery || Object.keys(updateQuery).length === 0) {
+      return res.status(400).json({ message: "Empty update query" });
+    }
+
+    const allowedOperators = ["$set", "$inc", "$push"];
+
+    const isValid = Object.keys(updateQuery).every((key) =>
+      allowedOperators.includes(key),
+    );
+
+    if (!isValid) {
+      return res.status(400).json({ message: "Invalid update operator" });
+    }
+
+    const result = await req.collections.appointments.updateOne(
+      { _id: new ObjectId(id) },
+      updateQuery,
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "No document updated" });
+    }
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getAbsentAppointments = async (req, res) => {
+  try {
+    const { departmentId } = req.params;
+    const query = {
+      status: "quarantined",
+      "metaData.isActive": true,
+      "department.id": departmentId,
+    };
+
+    const result = await req.collections.appointments.find(query).toArray();
+
+    console.log(res.status(200).send(result));
+     
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };

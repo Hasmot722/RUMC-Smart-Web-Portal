@@ -22,7 +22,7 @@ const Home = () => {
             />
           </Link>
 
-          <Link to="">
+          <Link to="pending-tests">
             <img
               src={pendingTestst}
               alt=""

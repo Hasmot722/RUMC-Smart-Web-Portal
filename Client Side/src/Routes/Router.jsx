@@ -15,6 +15,7 @@ import Contact from "../Pages/Contact/Contact";
 import AbsentPatients from "../Pages/Dashboard/Doctor/AbsentPatients";
 import VirtualPrescription from "../Pages/Dashboard/Doctor/VirtualPrescription";
 import VirtualPrescriptionRequest from "../Pages/VirtualPrescriptionRequest/VirtualPrescriptionRequest";
+import PendingTests from "../Pages/Pending Tests/PendingTests";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "book-appointment",
         Component: BookAppointment,
+      },
+      {
+        path: "pending-tests",
+        Component: PendingTests
       },
       {
         path: "virtual-prescription-request",

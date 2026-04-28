@@ -32,7 +32,6 @@ exports.getCurrentAppointment = async (req, res) => {
     const query = {
       "patient.id": Number(patientId),
       status: "pending",
-      "metaData.isActive": true,
     };
     const result = await req.collections.appointments.findOne(query, {
       sort: { "metaData.bookingTime": -1 },
@@ -41,6 +40,26 @@ exports.getCurrentAppointment = async (req, res) => {
     res.status(200).send(result);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getLatestAppointmentForVirtual = async (req, res) => {
+  try {
+    const { patientId } = req.params;
+
+    const result = await req.collections.appointments.findOne(
+      {
+        "patient.id": Number(patientId),
+        status: { $in: ["processing", "virtual_pending"] },
+      },
+      {
+        sort: { "metaData.bookingTime": -1 },
+      },
+    );
+
+    res.send(result);
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -169,7 +188,6 @@ exports.getVirtualRequestsByDepartment = async (req, res) => {
       .find({
         "department.id": departmentId,
         status: { $in: ["virtual_pending", "approved"] },
-        "metaData.isActive": true,
       })
       .toArray();
 

@@ -12,15 +12,28 @@ const user = {
 const VirtualPrescriptionRequest = () => {
   const navigate = useNavigate();
   const [appointment, setAppointment] = useState(null);
+  const [report, setReport] = useState(null);
+  const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     axiosProvider
-      .get(`appointments/current/${user._id}`)
+      .get(`appointments/virtual/latest/${user._id}`)
       .then((res) => {
         setAppointment(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    if (!appointment?._id) return;
+
+    axiosProvider
+      .get(`/reports/appointment/${appointment._id}`)
+      .then((res) => {
+        setReport(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [appointment]);
 
   const handleRequest = async () => {
     try {
@@ -32,14 +45,15 @@ const VirtualPrescriptionRequest = () => {
 
       toast.success("Virtual request sent");
       setAppointment({ ...appointment, status: "virtual_pending" });
+      setRequested(true);
     } catch (err) {
       toast.error("Failed to send request");
     }
   };
 
   const canRequest =
-    appointment?.status === "completed" &&
-    appointment?.tests?.every((t) => t.status === "completed");
+    report?.tests?.length > 0 &&
+    report.tests.every((t) => t.status === "completed");
 
   return (
     <div className="min-h-screen mt-5 sm:mt-10 bg-gradient-to-br from-[#f5f3ff] via-white to-[#ede9fe] sm:mx-10">
@@ -109,13 +123,13 @@ const VirtualPrescriptionRequest = () => {
                 </p>
 
                 <span className="text-xs text-primary font-medium">
-                  {appointment.tests?.length || 0} Tests
+                  {report?.tests?.length || 0} Tests
                 </span>
               </div>
 
-              {appointment.tests?.length > 0 ?
+              {report?.tests?.length > 0 ?
                 <div className="space-y-2">
-                  {appointment.tests.map((test, i) => (
+                  {report?.tests.map((test, i) => (
                     <div
                       key={i}
                       className="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-primary/5 transition">
@@ -154,7 +168,7 @@ const VirtualPrescriptionRequest = () => {
 
               {/* Request */}
               <button
-                disabled={!canRequest}
+                disabled={!canRequest || requested}
                 onClick={handleRequest}
                 className={`flex-1 py-2.5 rounded-xl font-medium transition ${
                   canRequest ?

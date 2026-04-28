@@ -129,35 +129,7 @@ const ManageSchedule = () => {
         </div>
       </div>
 
-      {/* ================= REQUESTS ================= */}
-      <div className="bg-white rounded-xl shadow-md border-t-4 border-primary p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Availability Requests
-        </h3>
-
-        <div className="space-y-3">
-          {requests.map((req) => (
-            <div
-              key={req.id}
-              className="border rounded-xl p-4 flex justify-between items-center hover:shadow-sm transition">
-              <div>
-                <p className="font-medium text-gray-900">{req.name}</p>
-                <p className="text-sm text-gray-500">{req.time}</p>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md flex items-center gap-1">
-                  <FaCheck /> Accept
-                </button>
-
-                <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-md flex items-center gap-1">
-                  <FaTimes /> Reject
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+     
 
       {/* ================= MODAL ================= */}
       {showModal && (

@@ -13,6 +13,8 @@ import EmergencyServices from "../Pages/EmergencyServices/EmergencyServices";
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
 import AbsentPatients from "../Pages/Dashboard/Doctor/AbsentPatients";
+import VirtualPrescription from "../Pages/Dashboard/Doctor/VirtualPrescription";
+import VirtualPrescriptionRequest from "../Pages/VirtualPrescriptionRequest/VirtualPrescriptionRequest";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "book-appointment",
         Component: BookAppointment,
+      },
+      {
+        path: "virtual-prescription-request",
+        Component: VirtualPrescriptionRequest,
       },
       {
         path: "medical-history",
@@ -82,6 +88,10 @@ export const router = createBrowserRouter([
       {
         path: "absent",
         Component: AbsentPatients,
+      },
+      {
+        path: "virtual-prescription",
+        Component: VirtualPrescription,
       },
     ],
   },

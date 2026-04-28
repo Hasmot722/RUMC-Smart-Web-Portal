@@ -7,6 +7,7 @@ const usersRoutes = require("./routes/usersRoutes");
 const departmentsRoutes = require("./routes/departmentsRoutes");
 const appointmentsRoutes = require("./routes/appointmentsRoutes");
 const reportPrescriptionRoutes = require("./routes/reportPrescriptionRoutes");
+const testsRoutes = require("./routes/testsRoutes");
 const attachDB = require("./middleware/attachDB");
 
 const app = express();
@@ -27,7 +28,8 @@ async function startServer() {
   app.use("/departments", departmentsRoutes);
   app.use("/appointments", appointmentsRoutes);
   app.use("/reports", reportPrescriptionRoutes);
-  
+  app.use("/tests", testsRoutes);
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });

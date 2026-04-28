@@ -57,12 +57,8 @@ const DashSidebar = () => {
           <SidebarItem active={isActive("/dashboard/manage-schedule")} icon={<FaCalendarAlt />} text="Manage Schedule" />
         </Link>
 
-        <Link to="/dashboard/patients">
-          <SidebarItem active={isActive("/dashboard/patients")} icon={<FaUserInjured />} text="Manage Patients" />
-        </Link>
-
-        <Link to="/dashboard/prescription">
-          <SidebarItem active={isActive("/dashboard/prescription")} icon={<FaFilePrescription />} text="Virtual Prescription" />
+        <Link to="virtual-prescription">
+          <SidebarItem active={isActive("/dashboard/virtual-prescription")} icon={<FaFilePrescription />} text="Virtual Prescription" />
         </Link>
 
         <Link to="/dashboard/absent">

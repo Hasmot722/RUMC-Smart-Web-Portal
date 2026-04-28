@@ -1,22 +1,19 @@
 const { ObjectId } = require("mongodb");
 
-
 exports.createReport = async (req, res) => {
   try {
     const { appointmentId } = req.params;
     const { medicines, tests, notes, status } = req.body;
 
     // CLEAN DATA
-    const cleanedTests = (tests || []).filter(
-      (t) => typeof t === "string" && t.trim() !== ""
-    );
+    const cleanedTests = (tests || []).filter((t) => t && t.name);
 
     const cleanedMedicines = (medicines || []).filter(
       (m) =>
         m &&
         (m.name?.trim() !== "" ||
-         m.dose?.trim() !== "" ||
-         m.duration?.trim() !== "")
+          m.dose?.trim() !== "" ||
+          m.duration?.trim() !== ""),
     );
 
     const hasTests = cleanedTests.length > 0;
@@ -40,11 +37,10 @@ exports.createReport = async (req, res) => {
           "metaData.isActive": false,
           "metaData.completedAt": new Date(),
         },
-      }
+      },
     );
 
     res.status(200).json({ message: "Report saved", status });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -75,9 +71,7 @@ exports.getReportsByPatientId = async (req, res) => {
       .project({ _id: 1 })
       .toArray();
 
-    const appointmentIds = appointments.map(
-      (appt) => new ObjectId(appt._id)
-    );
+    const appointmentIds = appointments.map((appt) => new ObjectId(appt._id));
 
     const reports = await req.collections.reports
       .find({ appointmentId: { $in: appointmentIds } })

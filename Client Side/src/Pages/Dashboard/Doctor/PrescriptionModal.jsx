@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import axiosProvider from "../../../APIs/axiosProvider";
 import toast from "react-hot-toast";
+import Select from "react-select";
 
 const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
   const [medicines, setMedicines] = useState([
     { name: "", dose: "", duration: "" },
   ]);
 
-  const [tests, setTests] = useState([""]);
+  const [tests, setTests] = useState([]);
   const [statusCompleted, setStatusCompleted] = useState(true);
+  const [allTests, setAllTests] = useState([]);
 
   // ===== MEDICINES =====
   const addMedicine = () => {
@@ -33,7 +35,7 @@ const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
 
   // ===== TESTS =====
   const addTest = () => {
-    setTests([...tests, ""]);
+    setTests([...tests]);
   };
 
   const removeTest = (index) => {
@@ -47,7 +49,7 @@ const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
   };
 
   const handleSaveReport = async () => {
-    const cleanedTests = tests.filter((t) => t.trim() !== "");
+    const cleanedTests = tests;
 
     axiosProvider
       .post(`/reports/appointment/${appointment._id}`, {
@@ -73,6 +75,26 @@ const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
         toast.error("Failed to save report");
       });
   };
+
+  useEffect(() => {
+    axiosProvider
+      .get("tests")
+      .then((res) => {
+        // convert to dropdown format
+        const formatted = res.data.map((test) => ({
+          value: test._id,
+          label: test.name,
+          departmentId: test.departmentId,
+          departmentName: test.departmentName,
+        }));
+
+        // sort alphabetically
+        formatted.sort((a, b) => a.label.localeCompare(b.label));
+
+        setAllTests(formatted);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <dialog id="report_modal" className="modal">
@@ -119,21 +141,23 @@ const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
 
               <div className="space-y-3">
                 {tests.map((test, i) => (
-                  <div key={i} className="flex gap-2 items-center">
-                    <input
-                      value={test}
-                      onChange={(e) => updateTest(i, e.target.value)}
-                      placeholder="e.g. Blood Test"
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#7B74EA] outline-none"
-                    />
+                  <div
+                    key={i}
+                    className="flex justify-between items-center gap-2 mt-2">
+                    <div className="flex flex-col">
+                      <span className="text-sm text-gray-800">{test.name}</span>
+                      <span className="text-xs text-gray-400">
+                        {test.departmentName}
+                      </span>
+                    </div>
 
-                    {tests.length > 1 && (
-                      <button
-                        onClick={() => removeTest(i)}
-                        className="text-red-500 hover:scale-110 transition">
-                        <FaTimes />
-                      </button>
-                    )}
+                    <button
+                      onClick={() =>
+                        setTests(tests.filter((_, index) => index !== i))
+                      }
+                      className="text-red-500 text-sm">
+                      ✕
+                    </button>
                   </div>
                 ))}
               </div>
@@ -143,6 +167,28 @@ const PrescriptionModal = ({ doctor, appointment, onReportSaved }) => {
                 className="mt-3 text-sm text-[#7B74EA] font-medium hover:underline">
                 + Add Test
               </button>
+
+              <Select
+                options={allTests}
+                placeholder="Search & select test..."
+                onChange={(selected) => {
+                  if (!selected) return;
+
+                  const newTest = {
+                    testId: selected.value,
+                    name: selected.label,
+                    departmentId: selected.departmentId,
+                    departmentName: selected.departmentName,
+                    status: "pending",
+                  };
+
+                  // prevent duplicate
+                  if (tests.some((t) => t.testId === newTest.testId)) return;
+
+                  setTests([...tests, newTest]);
+                }}
+                isClearable
+              />
             </div>
 
             {/* ===== MEDICINES ===== */}

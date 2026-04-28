@@ -84,9 +84,11 @@ const History = () => {
                       className={`px-3 py-1 text-[10px] sm:text-sm font-semibold rounded-full ${
                         appointment.status === "completed" ?
                           "bg-green-100 text-green-600"
-                        : appointment.status === "pending" ?
-                          "bg-yellow-100 text-yellow-600"
-                        : "bg-red-100 text-red-500"
+                        : appointment.status === "cancelled" ?
+                          "bg-red-100 text-red-500"
+                        : appointment.status === "quarantined" ?
+                          "bg-blue-200 text-blue-500"
+                        : "bg-yellow-100 text-yellow-600"
                       }`}>
                       {appointment.status}
                     </span>
@@ -95,7 +97,7 @@ const History = () => {
                   {/* Action */}
                   <div className="text-right">
                     <button
-                      disabled={appointment.status === "cancelled"}
+                      disabled={appointment.status === "cancelled" || appointment.status === "pending" || appointment.status === "processing" || appointment.status === "virtual_report" || appointment.status === "quarantined"}
                       onClick={() => {
                         setAppointment(appointment);
                         document.getElementById("premium_modal").showModal();

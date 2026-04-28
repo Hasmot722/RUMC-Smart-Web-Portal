@@ -63,6 +63,7 @@ const DoctorDashboard = () => {
   const [pendingAppointments, setPendingAppointments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [handledAppointments, setHandledAppointments] = useState([]);
+  const [requests, setRequests] = useState([]);
   const itemsPerPage = 4;
 
   useEffect(() => {
@@ -108,6 +109,16 @@ const DoctorDashboard = () => {
       .catch((err) => console.log(err.message));
   });
 
+    //FETCH REQUESTS
+  useEffect(() => {
+    axiosProvider
+      .get(
+        `/appointments/virtual-prescription/department/${doctor.department.id}`,
+      )
+      .then((res) => setRequests(res.data))
+      .catch((err) => console.log(err.message));
+  }, []);
+
   const onReportSaved = () => {
     setPendingAppointments((prev) => prev.slice(1));
   };
@@ -137,7 +148,7 @@ const DoctorDashboard = () => {
   };
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 w-full">
       {/* TOP BAR */}
 
       {/* CONTENT */}
@@ -166,7 +177,7 @@ const DoctorDashboard = () => {
                     <div>
                       <img
                         src="https://static.vecteezy.com/system/resources/thumbnails/078/657/664/small/young-man-in-round-glasses-giving-thumbs-up-gesture-photo.jpeg"
-                        className="w-26 h-24 rounded-xl"
+                        className="w-24 h-24 rounded-xl"
                         alt=""
                       />
 
@@ -201,7 +212,7 @@ const DoctorDashboard = () => {
                           onClick={() =>
                             document.getElementById("report_modal").showModal()
                           }
-                          className="bg-[#7B74EA] hover:bg-green-600 w-full text-white px-4  py-2 flex gap-2 justify-center items-center rounded-md text-sm">
+                          className="bg-[#7B74EA] hover:bg-green-600 w-1/2 text-white px-4  py-2 flex gap-2 justify-center items-center rounded-md text-sm">
                           <MdAssignmentAdd className="text-lg" />{" "}
                           <p>Create Report</p>
                         </button>
@@ -211,7 +222,7 @@ const DoctorDashboard = () => {
                               .getElementById("mark_absent_modal")
                               .showModal()
                           }
-                          className="bg-red-500  hover:bg-secondary w-full text-white px-4 py-2 flex gap-2 items-center justify-center rounded-md text-sm">
+                          className="bg-red-500  hover:bg-secondary w-1/2 text-white px-4 py-2 flex gap-2 items-center justify-center rounded-md text-sm">
                           <FaUserTimes className="text-lg" /> <p>Mark Absent</p>
                         </button>
                       </div>
@@ -257,7 +268,7 @@ const DoctorDashboard = () => {
                     <p className="text-sm font-bold text-gray-600">
                       Prescription Request
                     </p>
-                    <h2 className="text-2xl ml-3 font-bold text-gray-900">6</h2>
+                    <h2 className="text-2xl ml-3 font-bold text-gray-900">{requests?.length}</h2>
                   </div>
                 </div>
               </div>

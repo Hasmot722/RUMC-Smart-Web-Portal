@@ -155,9 +155,26 @@ exports.getAbsentAppointments = async (req, res) => {
     const result = await req.collections.appointments.find(query).toArray();
 
     console.log(res.status(200).send(result));
-     
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getVirtualRequestsByDepartment = async (req, res) => {
+  try {
+    const { departmentId } = req.params;
+
+    const result = await req.collections.appointments
+      .find({
+        "department.id": departmentId,
+        status: { $in: ["virtual_pending", "approved"] },
+        "metaData.isActive": true,
+      })
+      .toArray();
+
+    res.status(200).send(result);
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };

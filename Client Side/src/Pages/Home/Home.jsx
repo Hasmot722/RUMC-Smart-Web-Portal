@@ -10,12 +10,8 @@ import CurrentActions from "./CurrentActions";
 import NoticeInfo from "./NoticeInfo";
 
 const Home = () => {
-
-
-
   return (
     <div className="flex flex-col md:flex-row ">
-
       <div className=" mt-3 mx-3 sm:ml-6 lg:w-3/5 ">
         <div className="grid place-items-center grid-cols-2 sm:grid-cols-3">
           <Link to="book-appointment">
@@ -24,7 +20,6 @@ const Home = () => {
               alt=""
               className=" md:max-w-[200px] lg:max-w-[250px] lg:max-w-[260px] "
             />
-
           </Link>
 
           <Link to="">
@@ -35,7 +30,7 @@ const Home = () => {
             />
           </Link>
 
-          <Link>
+          <Link to="">
             <img
               src={reportPrescription}
               alt=""
@@ -43,7 +38,7 @@ const Home = () => {
             />
           </Link>
 
-          <Link to="">
+          <Link to="virtual-prescription-request">
             <img
               src={requestPrescription}
               alt=""
@@ -69,13 +64,11 @@ const Home = () => {
         </div>
 
         <CurrentActions />
-
       </div>
 
       <div className="lg:w-2/5 lg:mr-9 not-sm:hidden">
         <NoticeInfo />
       </div>
-
     </div>
   );
 };
